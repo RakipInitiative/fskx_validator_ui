@@ -101,6 +101,17 @@ class ResultsTable extends React.Component {
 
     render() {
         console.log(this.props.checks);
+
+        let combineArchiveError;
+        let structureError;
+        let codeError;
+
+        if (this.props && this.props.checks) {
+            if (this.props.checks[0]) combineArchiveError = this.props.checks[0].error;
+            if (this.props.checks[1]) structureError = this.props.checks[1].error;
+            if (this.props.checks[2]) codeError = this.props.checks[2].error;
+        }
+
         return (
             <Table className="table-bordered">
             <thead>
@@ -112,15 +123,15 @@ class ResultsTable extends React.Component {
             <tbody>
                 <tr>
                     <th scope="row">CombineArchive check</th>
-                    <CheckCell error={this.props && this.props.checks ? this.props.checks[0].error : '' } />
+                    <CheckCell error={combineArchiveError} />
                 </tr>
                 <tr>
                     <th scope="row">Structure check</th>
-                    <CheckCell error={this.props && this.props.checks ? this.props.checks[1].error : '' } />
+                    <CheckCell error={structureError} />
                 </tr>
                 <tr>
                     <th scope="row">Code check</th>
-                    <CheckCell error={this.props && this.props.checks ? this.props.checks[2].error : '' } />
+                    <CheckCell error={codeError} />
                 </tr>
             </tbody>
             </Table>
@@ -131,7 +142,6 @@ class ResultsTable extends React.Component {
 class CheckCell extends React.Component {
 
     render() {
-
         return (
             <td>
                 {this.props.error &&
